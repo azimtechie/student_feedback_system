@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Faculty Feedback Form</h1>
+
+<ul class="nav nav-tabs" id="facultyTabs" role="tablist">
+
+    {% for faculty_member in faculty %}
+
+    <li class="nav-item">
+        {% if loop.first %}
+        
+        <a class="nav-link active" id="{{faculty_member[0]}}-tab" data-toggle="tab" href="#{{faculty_member[0]}}"
+            role="tab" aria-controls="{{faculty_member[0]}}" aria-selected="true">{{faculty_member[0]}}</a>
+        {% else %}
+
+        <a class="nav-link " id="{{faculty_member[0]}}-tab" data-toggle="tab" href="#{{faculty_member[0]}}"
+            role="tab" aria-controls="{{faculty_member[0]}}" aria-selected="true">{{faculty_member[0]}}</a>
+      {% endif %}
+
+     
+    </li>
+    {% endfor %}
+</ul>
+
+<div class="tab-content" id="facultyTabsContent">
+    {% for faculty_member in faculty %}
+    {% if loop.first %}
+
+    <div class="tab-pane fade in  active" id="{{faculty_member[0]}}" role="tabpanel" aria-labelledby="{{faculty_member[0]}}-tab">
+        {% else %}
+    <div class="tab-pane fade in  " id="{{faculty_member[0]}}" role="tabpanel" aria-labelledby="{{faculty_member[0]}}-tab">
+        {% endif %}
+
+        <h3>Feedback for Faculty 1</h3>
+        <form method="POST">
+            <div class="form-group">
+                <label for="feedback1">Feedback:</label>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="feedback1" id="faculty1-1" value="1">1
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="feedback1" id="faculty1-2" value="2">2
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="feedback1" id="faculty1-3" value="3">3
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="feedback1" id="faculty1-4" value="4">4
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="feedback1" id="faculty1-5" value="5">5
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="feedback1" id="faculty1-6" value="6">6
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="feedback1" id="faculty1-7" value="7">7
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="feedback1" id="faculty1-8" value="8">8
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="feedback1" id="faculty1-9" value="9">9
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="feedback1" id="faculty1-10" value="10">10
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    {% endfor %}
+   
+</div>
+
+
+{% endblock %}
