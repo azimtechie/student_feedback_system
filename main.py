@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
+from flask_bootstrap import Bootstrap
+
 
 conn = sqlite3.connect('mydatabase.db')
 # cursor = conn.cursor()
@@ -19,6 +21,7 @@ conn = sqlite3.connect('mydatabase.db')
 # conn.commit()
 # conn.close()
 app = Flask(__name__)
+Bootstrap(app)
 
 
 @app.route('/')
@@ -34,11 +37,12 @@ def user_login():
     cursor = conn.cursor()
     conn = sqlite3.connect('mydatabase.db')
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM users WHERE email=? AND password=? AND is_admin=0', (email, password))
+    cursor.execute(
+        'SELECT * FROM users WHERE email=? AND password=? AND is_admin=0', (email, password))
     user = cursor.fetchone()
-    
+
     conn.close()
-    
+
     if user:
         return redirect(url_for('user_home'))
     else:
@@ -54,11 +58,12 @@ def admin_login():
     cursor = conn.cursor()
     conn = sqlite3.connect('mydatabase.db')
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM users WHERE email=? AND password=? AND is_admin=1', (email, password))
+    cursor.execute(
+        'SELECT * FROM users WHERE email=? AND password=? AND is_admin=1', (email, password))
     user = cursor.fetchone()
-    
+
     conn.close()
-    
+
     if user:
         return redirect(url_for('admin_home'))
     else:
@@ -96,7 +101,8 @@ def add_faculty_submit():
     c = conn.cursor()
 
     # Insert the new faculty into the database
-    c.execute("INSERT INTO faculty (name, department) VALUES (?, ?)", (name, department))
+    c.execute("INSERT INTO faculty (name, department) VALUES (?, ?)",
+              (name, department))
     conn.commit()
 
     # Close the database connection
@@ -104,6 +110,7 @@ def add_faculty_submit():
 
     # Redirect back to the add faculty page
     return redirect(url_for('admin_home'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
