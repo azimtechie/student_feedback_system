@@ -15,19 +15,27 @@
     />
   </head>
   <body>
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="/">LJKU Student Feedback System</a>
-        </div>
-      </div>
-    </nav>
     <div class="container-fluid">
-      {% with messages = get_flashed_messages() %} {% if messages %} {% for
-      message in messages %}
-      <div class="alert alert-warning">{{ message }}</div>
-      {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
+      <div id="header">{% block header %}{% endblock %}</div>
+      <div id="content">{% block content %}{% endblock %}</div>
+      <div id="footer">{% block footer %}{% endblock %}</div>
     </div>
+    <script>
+      $(document).ready(function () {
+        // add active class to student login tab and remove it from admin login tab
+        $("#student-login-tab").click(function () {
+          $(this).addClass("active");
+          $("#admin-login-tab").removeClass("active");
+        });
+
+        // add active class to admin login tab and remove it from student login tab
+        $("#admin-login-tab").click(function () {
+          $(this).addClass("active");
+          $("#student-login-tab").removeClass("active");
+        });
+      });
+    </script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </body>

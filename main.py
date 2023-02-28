@@ -51,6 +51,7 @@ def user_login():
 
 @app.route('/admin/login', methods=['POST'])
 def admin_login():
+    print("Hello, Admin")
     email = request.form['email']
     password = request.form['password']
 

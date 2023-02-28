@@ -108,3 +108,55 @@
 .fade:not(.show) {
   opacity: 1;
 }
+.btn-outline-danger {
+  border-color: black !important;
+  color: black;
+}
+.btn-outline-primary {
+  border-color: black !important;
+  color: black;
+}
+.btn-outline-success {
+  border-color: black !important;
+  color: black;
+}
+.btn-outline-danger:hover {
+  color: white !important;
+}
+.btn-outline-primary:hover {
+  color: white !important;
+}
+.btn-outline-success:hover {
+  color: white !important;
+}
+
+.btn-outline-danger:focus {
+  color: white !important;
+}
+.btn-outline-primary:focus {
+  color: white !important;
+}
+.btn-outline-success:focus {
+  color: white !important;
+}
+
+.btn-group > .btn:not(:first-child) {
+  margin-left: 0px !important;
+}
+/* Style for the active student login tab */
+#student-login-tab.active {
+  background-color: #0069f7 !important;
+  color: #fff;
+}
+
+/* Style for the alternate admin login tab */
+.admin-login-tab:not(.active) {
+  background-color: #1a1b1c !important;
+}
+.student-login-tab:not(.active) {
+  background-color: #1a1b1c !important;
+}
+#admin-login-tab.active {
+  background-color: #0069f7 !important;
+  color: #fff;
+}
