@@ -9,13 +9,13 @@ conn = sqlite3.connect('mydatabase.db')
 #     CREATE TABLE IF NOT EXISTS users (
 #         id INTEGER PRIMARY KEY,
 #         username TEXT NOT NULL,
-#         email TEXT NOT NULL,
+#         enrollment_no TEXT NOT NULL,
 #         password TEXT NOT NULL,
 #         is_admin INTEGER DEFAULT 0
 #     )
 # ''')
 # cursor.execute('''
-#     INSERT INTO users (username, email, password, is_admin)
+#     INSERT INTO users (username, enrollment_no, password, is_admin)
 #     VALUES ('mosam', 'mosam@gmail.com', 'password', 1)
 # ''')
 # conn.commit()
@@ -31,14 +31,14 @@ def login():
 
 @app.route('/user/login', methods=['POST'])
 def user_login():
-    email = request.form['email']
+    enrollment_no = request.form['enrollment_no']
     password = request.form['password']
     conn = sqlite3.connect("mydatabase.db")
     cursor = conn.cursor()
     conn = sqlite3.connect('mydatabase.db')
     cursor = conn.cursor()
     cursor.execute(
-        'SELECT * FROM users WHERE email=? AND password=? AND is_admin=0', (email, password))
+        'SELECT * FROM users WHERE enrollment_no=? AND password=? AND is_admin=0', (enrollment_no, password))
     user = cursor.fetchone()
 
     conn.close()
@@ -52,7 +52,7 @@ def user_login():
 @app.route('/admin/login', methods=['POST'])
 def admin_login():
     print("Hello, Admin")
-    email = request.form['email']
+    enrollment_no = request.form['enrollment_no']
     password = request.form['password']
 
     conn = sqlite3.connect("mydatabase.db")
@@ -60,7 +60,7 @@ def admin_login():
     conn = sqlite3.connect('mydatabase.db')
     cursor = conn.cursor()
     cursor.execute(
-        'SELECT * FROM users WHERE email=? AND password=? AND is_admin=1', (email, password))
+        'SELECT * FROM users WHERE enrollment_no=? AND password=? AND is_admin=1', (enrollment_no, password))
     user = cursor.fetchone()
 
     conn.close()
@@ -88,22 +88,34 @@ def user_home():
 @app.route('/admin/home')
 def admin_home():
     # TODO: add admin home page code here
-    return render_template('admin_home.html')
+    return render_template('adminpage.html')
+
+
+@app.route('/admin/add-faculty')
+def add_faculty():
+    return render_template('faculty_add_form.html')
 
 
 @app.route('/add_faculty', methods=['POST'])
 def add_faculty_submit():
     # Get the form data from the request object
-    name = request.form['name']
+    firstname = request.form['firstname']
+    lastname = request.form['lastname']
     department = request.form['department']
+    experiance = request.form['experiance']
+    qualification = request.form['qualification']
+    email = request.form['email']
+    city = request.form['city']
+    state = request.form['state']
+    zip = request.form['zip']
 
     # Connect to the SQLite database
     conn = sqlite3.connect('mydatabase.db')
     c = conn.cursor()
 
     # Insert the new faculty into the database
-    c.execute("INSERT INTO faculty (name, department) VALUES (?, ?)",
-              (name, department))
+    c.execute("INSERT INTO faculty (firstname, lastname, department, experiance, qualification, email, city, state, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+              (firstname, lastname, department, experiance, qualification, email, city, state, zip))
     conn.commit()
 
     # Close the database connection
