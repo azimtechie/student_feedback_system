@@ -35,8 +35,6 @@ def user_login():
     password = request.form['password']
     conn = sqlite3.connect("mydatabase.db")
     cursor = conn.cursor()
-    conn = sqlite3.connect('mydatabase.db')
-    cursor = conn.cursor()
     cursor.execute(
         'SELECT * FROM users WHERE enrollment_no=? AND password=? AND is_admin=0', (enrollment_no, password))
     user = cursor.fetchone()
@@ -54,9 +52,6 @@ def admin_login():
     print("Hello, Admin")
     enrollment_no = request.form['enrollment_no']
     password = request.form['password']
-
-    conn = sqlite3.connect("mydatabase.db")
-    cursor = conn.cursor()
     conn = sqlite3.connect('mydatabase.db')
     cursor = conn.cursor()
     cursor.execute(
@@ -87,13 +82,40 @@ def user_home():
 
 @app.route('/admin/home')
 def admin_home():
-    # TODO: add admin home page code here
     return render_template('adminpage.html')
 
 
 @app.route('/admin/add-faculty')
 def add_faculty():
     return render_template('faculty_add_form.html')
+
+
+@app.route('/user/home')
+def faculty_feedback():
+    return render_template('user_home.html')
+
+
+@app.route('/', methods=["GET", 'POST'])
+def faculty_feedback_post():
+    if request.method == 'POST':
+        # Extract data from the form
+        faculty_member = request.form['faculty_member']
+        feedback_score = int(request.form['feedback_score'])
+
+        # Insert data into the database
+        conn = sqlite3.connect('mydatabase.db')
+        c = conn.cursor()
+        c.execute('INSERT INTO feedback (faculty_member, feedback_score) VALUES (?, ?)',
+                  (faculty_member, feedback_score))
+        conn.commit()
+        conn.close()
+
+        return 'Thanks for submitting your feedback!'
+    # else:
+    #     # Render the feedback form
+    #     faculty = [('John Smith', 'Computer Science'),
+    #                ('Jane Doe', 'Mathematics')]
+    #     return render_template('user_home.html', faculty=faculty)
 
 
 @app.route('/add_faculty', methods=['POST'])

@@ -44,6 +44,12 @@
         // code to be executed when the button is clicked
         alert("Button clicked!");
       }
+      $(".continue").click(function () {
+        $(".nav-tabs > .active").next("li").find("a").trigger("click");
+      });
+      $(".back").click(function () {
+        $(".nav-tabs > .active").prev("li").find("a").trigger("click");
+      });
     </script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
